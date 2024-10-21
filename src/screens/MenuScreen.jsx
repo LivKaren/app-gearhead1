@@ -74,7 +74,7 @@ export default function MenuScreen({ navigation }) {
             <ScrollView>
                 <View
                     style={{
-                        padding: 16,
+                        padding: 15,
                         backgroundColor: "rgb(139,0,0)",
                     }}
                 >
@@ -239,10 +239,10 @@ export default function MenuScreen({ navigation }) {
                             mechanic: {
                                 image: "https://scontent.fbnu3-1.fna.fbcdn.net/v/t39.30808-6/302200185_476642891142263_6721106998601686659_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=I-LJndsFdV8Q7kNvgGUtAm-&_nc_ht=scontent.fbnu3-1.fna&_nc_gid=Aj2Qmm04i4gp9UARFwg2KlQ&oh=00_AYC-gFH7VukqumP2Q6Ii1I2kYdQsqtv4YjEV1HgYoAPN5w&oe=670C8FFD",
                                 name: "Joinville Car",
-                                phone: "(11) 99999-9999",
-                                location: "Rua das Oficinas, 123",
+                                phone: "(47) 3438-1726",
+                                location: " R. Anitápolis, 576 - Itaum, Joinville - SC, 89210-680",
                                 hours: "08:00 - 18:00",
-                                rating: 4.5,
+                                rating: 4.7,
                                 description: "Somos especialistas em serviços de manutenção automotiva...",
                             },
                         });
@@ -253,7 +253,7 @@ export default function MenuScreen({ navigation }) {
                         style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
                     />
                     <Text style={{ fontSize: 18, fontWeight: "bold" }}>Joinville Car</Text>
-                    <Text>⭐ 4.5</Text>
+                    <Text>⭐ 4.7</Text>
                     <Text>Aberto: 08:00 - 18:00</Text>
                     <Text>3 km de distância</Text>
                     <Button
@@ -262,10 +262,10 @@ export default function MenuScreen({ navigation }) {
         mechanic: {
             image: "https://scontent.fbnu3-1.fna.fbcdn.net/v/t39.30808-6/302200185_476642891142263_6721106998601686659_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=I-LJndsFdV8Q7kNvgGUtAm-&_nc_ht=scontent.fbnu3-1.fna&_nc_gid=Aj2Qmm04i4gp9UARFwg2KlQ&oh=00_AYC-gFH7VukqumP2Q6Ii1I2kYdQsqtv4YjEV1HgYoAPN5w&oe=670C8FFD",
             name: "Joinville Car",
-            phone: "(11) 99999-9999",
-            location: "Rua das Oficinas, 123",
+            phone: "(47) 3438-1726",
+            location: " R. Anitápolis, 576 - Itaum, Joinville - SC, 89210-680",
             hours: "08:00 - 18:00",
-            rating: 4.5,
+            rating: 4.7,
             description: "Somos especialistas em serviços de manutenção automotiva...",
         },
     })}
@@ -275,7 +275,7 @@ export default function MenuScreen({ navigation }) {
 </Button>
                     {/* Ícone do coração */}
                     <TouchableOpacity onPress={() => toggleHeart(0)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[0] ? "favorite" : "favorite-border"} size={40} color="red" />
+                        <Icon name={hearts[0] ? "favorite" : "favorite-border"} size={40} color="#e6594a" />
                     </TouchableOpacity>
                 </TouchableOpacity>
 
@@ -334,7 +334,7 @@ export default function MenuScreen({ navigation }) {
     Agendar
 </Button>
                     <TouchableOpacity onPress={() => toggleHeart(1)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[1] ? "favorite" : "favorite-border"} size={40} color="red" />
+                        <Icon name={hearts[1] ? "favorite" : "favorite-border"} size={40} color="#e6594a" />
                     </TouchableOpacity>
                 </TouchableOpacity>
 
@@ -392,7 +392,7 @@ export default function MenuScreen({ navigation }) {
     Agendar
 </Button>
                     <TouchableOpacity onPress={() => toggleHeart(2)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[2] ? "favorite" : "favorite-border"} size={40} color="red" />
+                        <Icon name={hearts[2] ? "favorite" : "favorite-border"} size={40} color="#e6594a" />
                     </TouchableOpacity>
                 </TouchableOpacity>
                 </View>

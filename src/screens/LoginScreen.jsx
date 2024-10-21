@@ -10,12 +10,16 @@ export default function LoginScreen() {
 
   const handleLogin = () => {
     // Lógica de login aqui
-    alert('Login realizado com sucesso!');
+    navigation.navigate('HomeScreen'); // Redireciona para a HomeScreen
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Bem-vindo de volta! Faça login para continuar.</Text>
+      {/* Título "Bem-vindo de volta!" */}
+      <Text style={styles.titleText}>Bem-vindo de volta!</Text>
+
+      {/* Subtítulo */}
+      <Text style={styles.welcomeText}>Faça login para continuar.</Text>
 
       {/* Campo de E-mail */}
       <TextInput
@@ -49,7 +53,7 @@ export default function LoginScreen() {
 
       {/* Imagem de carro */}
       <Image
-        source={{ uri: 'https://www.linkparaimagemdecarro.com/carro.png' }} // Substitua pelo link real da imagem
+        source={{ uri: 'https://media.istockphoto.com/id/1353185042/pt/vetorial/professional-automobile-maintenance-and-service-application-car-repair-app-concept.jpg?s=612x612&w=0&k=20&c=X6mmIvVj0UisWOPsq99xmmg8cQGVlg5MCm9debPnupE=' }} // Substitua pelo link real da imagem
         style={styles.carImage}
       />
     </View>
@@ -59,15 +63,23 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: 'white',
-    justifyContent: 'center',
+    padding: 10,
+    backgroundColor: '#e6594a',
+    justifyContent: 'flex-start', // Alinha o conteúdo para o topo
+  },
+  titleText: {
+    fontSize: 42, // Tamanho grande para o título
+    fontWeight: 'bold',
+    color: 'white', // Cor branca para destaque
+    marginBottom: 20, // Espaço abaixo do título
+    textAlign: 'center',
+    marginTop: 50, // Adiciona um espaço no topo para o título
   },
   welcomeText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'rgb(139,0,0)', // Cor vermelha
-    marginBottom: 20,
+    color: 'white',
+    marginBottom: 50, // Aumentando o espaço abaixo do subtítulo
     textAlign: 'center',
   },
   input: {
@@ -92,14 +104,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   registerText: {
-    color: 'gray',
+    color: 'white',
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 20,
   },
   carImage: {
     width: '100%',
-    height: 200,
-    resizeMode: 'contain',
+    height: 340, // Mantendo a imagem menor
+    resizeMode: 'cover', // Faz a imagem cobrir toda a área disponível
+    position: 'absolute',
+    bottom: 10, // Posiciona a imagem no inferior da tela
+    alignSelf: 'center',
   },
 });

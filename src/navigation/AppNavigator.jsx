@@ -156,11 +156,27 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
+      <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{
+            title: "Inicial",
+          }}
+        />
+      <Stack.Screen
+          name="RegisterScreen"
+          component={RegisterScreen}
+          options={{
+            title: "Cadastro",
+          }}
+        />
+
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{
-            title: "Inicial",
+            title: "Home",
           }}
         />
         <Stack.Screen
