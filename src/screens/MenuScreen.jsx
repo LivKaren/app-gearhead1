@@ -79,11 +79,14 @@ export default function MenuScreen({ navigation }) {
                     }}
                 >
                     <TextInput
+                    
                         label="Escolha sua localização"
                         value={location}
                         onChangeText={(text) => setLocation(text)}
                         mode="outlined"
-                        style={{ marginBottom: 20 }}
+                        style={{ marginBottom: 20,
+                            backgroundColor:"white",
+                         }}
                     />
                 </View>
 
@@ -275,7 +278,7 @@ export default function MenuScreen({ navigation }) {
 </Button>
                     {/* Ícone do coração */}
                     <TouchableOpacity onPress={() => toggleHeart(0)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[0] ? "favorite" : "favorite-border"} size={40} color="#e6594a" />
+                        <Icon name={hearts[0] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
                     </TouchableOpacity>
                 </TouchableOpacity>
 
@@ -334,7 +337,7 @@ export default function MenuScreen({ navigation }) {
     Agendar
 </Button>
                     <TouchableOpacity onPress={() => toggleHeart(1)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[1] ? "favorite" : "favorite-border"} size={40} color="#e6594a" />
+                        <Icon name={hearts[1] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
                     </TouchableOpacity>
                 </TouchableOpacity>
 
@@ -355,11 +358,11 @@ export default function MenuScreen({ navigation }) {
                         toggleHeart(2); // Alterna o estado do coração ao clicar
                         navigation.navigate("MecanicaDetalhe3Screen", {
                             mechanic: {
-                                image: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/01655080000186/fotofrentepatio-87476fbe-0237-46dc-9975-f669adadbc99.jpg",
-                                name: "Mecânica 123",
+                                image: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg",
+                                name: "REDCAR Mecânica Automotiva",
                                 phone: "(11) 97777-7777",
-                                location: "Rua das Oficinas, 789",
-                                hours: "07:30 - 18:30",
+                                location: " Rua Plácido Affonso Rausis, 160 - Nova Brasília, Joinville - SC",
+                                hours: "08:00 - 18:00",
                                 rating: 4.7,
                                 description: "Mecânica especializada em reparos rápidos e eficientes...",
                             },
@@ -367,22 +370,22 @@ export default function MenuScreen({ navigation }) {
                     }}
                 >
                     <Image
-                        source={{ uri: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/01655080000186/fotofrentepatio-87476fbe-0237-46dc-9975-f669adadbc99.jpg" }}
+                        source={{ uri: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg" }}
                         style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
                     />
-                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>Mecânica 123</Text>
+                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>REDCAR Mecânica Automotiva</Text>
                     <Text>⭐ 4.7</Text>
-                    <Text>Aberto: 07:30 - 18:30</Text>
+                    <Text>Aberto: 08:00 - 18:00</Text>
                     <Text>2 km de distância</Text>
                     <Button
     mode="contained"
     onPress={() => navigation.navigate("MecanicaDetalhe3Screen", {
         mechanic: {
-            image: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/01655080000186/fotofrentepatio-87476fbe-0237-46dc-9975-f669adadbc99.jpg",
-            name: "Js Auto Center",
+            image: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg",
+            name: "REDCAR Mecânica Automotiva",
             phone: "(11) 98888-8888",
-            location: "Rua das Oficinas, 456",
-            hours: "09:00 - 19:00",
+            location: " Rua Plácido Affonso Rausis, 160 - Nova Brasília, Joinville - SC",
+            hours: "08:00 - 18:00",
             rating: 4.0,
             description: "Atendemos todas as marcas e modelos com garantia de qualidade...",
         },
@@ -392,7 +395,7 @@ export default function MenuScreen({ navigation }) {
     Agendar
 </Button>
                     <TouchableOpacity onPress={() => toggleHeart(2)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[2] ? "favorite" : "favorite-border"} size={40} color="#e6594a" />
+                        <Icon name={hearts[2] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
                     </TouchableOpacity>
                 </TouchableOpacity>
                 </View>

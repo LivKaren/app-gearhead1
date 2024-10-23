@@ -140,7 +140,7 @@ function DrawerNavigator() {
       {/* Tela LogOut */}
       <Drawer.Screen
         name="LogOut"
-        component={LogOutScreen}
+        component={LoginScreen}
         options={{
           title: "Sair", 
           drawerIcon: ({ color, size }) => (

@@ -37,19 +37,19 @@ export default function MecanicaDetalhe2Screen({ route, navigation }) {
         source={{ uri: mechanic.image }}
         style={{ width: "100%", height: 200, borderRadius: 10, marginBottom: 16 }}
       />
-      <Title>{mechanic.name}</Title>
+      <Title style={{ fontWeight: "bold",color: 'rgb(139,0,0)' }}>{mechanic.name}</Title>
       <Text>Telefone: {mechanic.phone}</Text>
       <Text>Localização: {mechanic.location}</Text>
       <Text>Horário: {mechanic.hours}</Text>
       <Text>Avaliação: ⭐ {mechanic.rating}</Text>
 
       <View style={{ marginVertical: 20 }}>
-        <Title>Sobre</Title>
+        <Title style={{ fontWeight: "bold",color: 'rgb(139,0,0)' }}>Sobre</Title>
         <Text>{mechanic.description}</Text>
       </View>
 
       <View>
-        <Title>Serviços</Title>
+        <Title style={{ fontWeight: "bold", color: 'rgb(139,0,0)' }}>Serviços</Title>
         <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
           {services.map((service) => (
             <TouchableOpacity
@@ -74,7 +74,7 @@ export default function MecanicaDetalhe2Screen({ route, navigation }) {
                 style={{ width: 50, height: 50, marginBottom: 5 }}
               />
               <Text>{service.title}</Text>
-              <Text style={{ fontWeight: "bold" }}>{service.price}</Text>
+              <Text style={{ fontWeight: "bold", color: "rgb(139,0,0)" }}>{service.price}</Text>
               <Checkbox
                 status={selectedServices.includes(service.id) ? "checked" : "unchecked"}
                 onPress={() => toggleService(service.id)}

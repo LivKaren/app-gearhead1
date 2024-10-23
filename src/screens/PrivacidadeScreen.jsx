@@ -16,47 +16,56 @@ export default function PrivacidadeScreen() {
         <Text style={styles.title}>Política de Privacidade</Text>
 
         <Text style={styles.text}>
-          Nós valorizamos sua privacidade e estamos comprometidos em proteger seus dados pessoais. Esta Política de Privacidade descreve como coletamos, usamos, armazenamos e compartilhamos suas informações.
+          Esta Política de Privacidade descreve como coletamos, usamos e protegemos suas informações pessoais ao utilizar nosso aplicativo para agendar horários em nossa mecânica.
         </Text>
 
-        <Text style={styles.subtitle}>1. Coleta de Informações</Text>
+        <Text style={styles.subtitle}>1. Informações Coletadas</Text>
         <Text style={styles.text}>
-          Coletamos informações pessoais que você nos fornece diretamente ao usar nosso aplicativo, como nome, endereço de e-mail, e informações do dispositivo.
+          Coletamos as seguintes informações quando você se cadastra e utiliza nosso aplicativo:
+          {'\n'}- Nome
+          {'\n'}- E-mail
+          {'\n'}- Senha
+          {'\n'}- CPF
+          {'\n'}- Placa do carro
         </Text>
 
         <Text style={styles.subtitle}>2. Uso das Informações</Text>
         <Text style={styles.text}>
-          As informações que coletamos são usadas para fornecer, manter e melhorar nossos serviços, além de personalizar a experiência do usuário.
+          As informações que coletamos são utilizadas para:
+          {'\n'}- Criar e gerenciar sua conta.
+          {'\n'}- Processar agendamentos e notificações.
+          {'\n'}- Melhorar nossos serviços e a experiência do usuário.
+          {'\n'}- Cumprir obrigações legais.
         </Text>
 
-        <Text style={styles.subtitle}>3. Compartilhamento de Dados</Text>
+        <Text style={styles.subtitle}>3. Compartilhamento de Informações</Text>
         <Text style={styles.text}>
-          Nós não compartilhamos suas informações pessoais com terceiros, exceto quando exigido por lei ou para proteger nossos direitos.
+          Não compartilhamos suas informações pessoais com terceiros, exceto:
+          {'\n'}- Quando necessário para cumprir obrigações legais.
+          {'\n'}- Com prestadores de serviços que auxiliam na operação do aplicativo, sob rigoroso controle e confidencialidade.
         </Text>
 
-        <Text style={styles.subtitle}>4. Armazenamento de Dados</Text>
+        <Text style={styles.subtitle}>4. Proteção de Dados</Text>
         <Text style={styles.text}>
-          Mantemos suas informações por quanto tempo for necessário para cumprir os objetivos descritos nesta política, a menos que um período de retenção mais longo seja exigido ou permitido por lei.
+          Tomamos medidas de segurança adequadas para proteger suas informações contra acesso não autorizado, uso ou divulgação.
         </Text>
 
-        <Text style={styles.subtitle}>5. Segurança das Informações</Text>
+        <Text style={styles.subtitle}>5. Seus Direitos</Text>
         <Text style={styles.text}>
-          Implementamos medidas de segurança para proteger suas informações pessoais. No entanto, lembre-se de que nenhum sistema é completamente seguro.
+          Você tem o direito de:
+          {'\n'}- Acessar suas informações pessoais.
+          {'\n'}- Solicitar a correção de dados incorretos.
+          {'\n'}- Solicitar a exclusão de suas informações, respeitando as obrigações legais.
         </Text>
 
-        <Text style={styles.subtitle}>6. Seus Direitos</Text>
+        <Text style={styles.subtitle}>6. Alterações na Política de Privacidade</Text>
         <Text style={styles.text}>
-          Você tem o direito de acessar, corrigir ou excluir suas informações pessoais a qualquer momento, entrando em contato conosco.
+          Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos você sobre alterações significativas por meio do aplicativo ou por e-mail.
         </Text>
 
-        <Text style={styles.subtitle}>7. Alterações nesta Política</Text>
+        <Text style={styles.subtitle}>7. Contato</Text>
         <Text style={styles.text}>
-          Podemos atualizar esta Política de Privacidade periodicamente. Recomendamos que você revise esta página regularmente para se manter informado sobre como protegemos suas informações.
-        </Text>
-
-        <Text style={styles.subtitle}>8. Contato</Text>
-        <Text style={styles.text}>
-          Se você tiver alguma dúvida sobre nossa Política de Privacidade, entre em contato conosco pelo suporte@example.com.
+          Se você tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco pelo e-mail [gearheadsuporte@gmail.com].
         </Text>
       </ScrollView>
 

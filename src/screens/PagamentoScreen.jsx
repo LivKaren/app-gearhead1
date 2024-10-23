@@ -51,7 +51,7 @@ export default function PagamentoScreen({ route, navigation }) {
   return (
     <View style={{ flex: 1, padding: 16 }}>
       {/* Título da página */}
-      <Title style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Escolha o método de pagamento</Title>
+      <Title style={{color: 'rgb(139,0,0)', fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Escolha o método de pagamento</Title>
 
       {/* Cards de seleção de método de pagamento */}
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -88,7 +88,7 @@ export default function PagamentoScreen({ route, navigation }) {
       {/* Mostra as marcas de cartão se "Cartão de Crédito" ou "Cartão de Débito" for selecionado */}
       {(selectedPayment.includes(1) || selectedPayment.includes(2)) && (
         <>
-          <Text style={{ fontSize: 18, fontWeight: "bold", marginVertical: 10 }}>Selecione a marca do cartão</Text>
+          <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginVertical: 10 }}>Selecione a marca do cartão</Text>
           {/* ScrollView horizontal para as marcas de cartão */}
           <ScrollView horizontal style={{ flexDirection: "row" }}>
             {cardBrands.map((brand) => (
@@ -128,7 +128,7 @@ export default function PagamentoScreen({ route, navigation }) {
 
           {/* Formulário de informações do cartão */}
           <View style={{ marginTop: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Insira os dados do cartão</Text>
+            <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Insira os dados do cartão</Text>
             <TextInput
               style={{
                 borderColor: "#ccc",
@@ -187,7 +187,7 @@ export default function PagamentoScreen({ route, navigation }) {
       {selectedPayment.includes(3) && (
         <>
           <View style={{ marginTop: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Insira sua chave Pix</Text>
+            <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Insira sua chave Pix</Text>
             <TextInput
               style={{
                 borderColor: "#ccc",

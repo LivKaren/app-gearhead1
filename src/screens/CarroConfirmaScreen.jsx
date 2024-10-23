@@ -14,7 +14,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
   return (
     <View style={{ flex: 1, padding: 16 }}>
       {/* Título da página */}
-      <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Confirmação</Text>
+      <Text style={{ color: 'rgb(139,0,0)', fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Confirmação</Text>
 
       {/* Mini card da mecânica selecionada */}
       <View
@@ -43,7 +43,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
       </View>
 
       {/* Seção: Carro, serviço, data e hora */}
-      <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Carro, serviço, data e hora</Text>
+      <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Data e hora</Text>
       <View
         style={{
           backgroundColor: "#fff",
@@ -71,7 +71,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
       </View>
 
       {/* Seção: Tipo do Carro */}
-      <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Tipo do Carro</Text>
+      <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Tipo do Carro</Text>
       <View
         style={{
           backgroundColor: "#fff",
@@ -96,7 +96,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
       </View>
 
       {/* Seção: Serviços */}
-      <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Serviços</Text>
+      <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Serviços</Text>
       <View
         style={{
           backgroundColor: "#fff",
@@ -116,7 +116,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
       </View>
 
       {/* Seção: Pagamento Total */}
-      <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Pagamento Total</Text>
+      <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Pagamento Total</Text>
       <View
         style={{
           backgroundColor: "#fff",
