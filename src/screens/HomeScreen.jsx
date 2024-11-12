@@ -45,7 +45,7 @@ export default function HomeScreen({ navigation }) {
 
       <Button
         onPress={() => {
-          navigation.navigate("DrawerNavigator");
+          navigation.navigate("UserDrawerNavigator");
         }}
         mode="contained"
 

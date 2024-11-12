@@ -1,118 +1,113 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Importando a biblioteca de ícones
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { setDoc, doc, collection } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
-
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
-  const [tipoUsuario, setTipoUsuario] = useState('cliente'); // 'cliente' ou 'administrador'
-  const [nomeMecanica, setNomeMecanica] = useState('');
-  const [telefoneMecanica, setTelefoneMecanica] = useState('');
+  const [errors, setErrors] = useState({});
 
-  const handleRegister = () => {
-    // Lógica de cadastro aqui
-    Alert.alert('Cadastro realizado com sucesso!');
-    navigation.navigate('Login'); 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!nome || nome.length < 4) {
+      newErrors.nome = "O nome deve conter pelo menos 4 caracteres.";
+    }
+    if (!email.includes('@') || !email.includes('.')) {
+      newErrors.email = "Por favor, insira um email válido.";
+    }
+    if (senha.length < 6) {
+      newErrors.senha = "A senha deve ter pelo menos 6 caracteres.";
+    }
+    if (senha !== confirmarSenha) {
+      newErrors.confirmarSenha = "As senhas não coincidem.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleRegister = async () => {
+    if (!validateForm()) return;
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
+
+      const collectionRef = collection(db, 'usuarios');
+      await setDoc(doc(collectionRef, user.uid), {
+        nome,
+        email,
+        tipoUsuario: 'cliente', // Define o tipo de usuário fixo como "cliente"
+      });
+
+      Alert.alert('Cadastro realizado com sucesso!');
+      navigation.navigate('HomeScreen');
+    } catch (error) {
+      const errorMessage = error.code === 'auth/email-already-in-use'
+        ? 'Email já está cadastrado.'
+        : 'Erro ao cadastrar usuário: ' + error.message;
+      Alert.alert(errorMessage);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}>Cadastrar</Text>
-
-      {/* Campo de Nome */}
       <Text style={styles.welcomeText}>Por favor, crie sua conta para se associar a nós!</Text>
+
       <TextInput
         style={styles.input}
         placeholder="Nome"
         placeholderTextColor="gray"
         value={nome}
-        onChangeText={setNome}
+        onChangeText={(text) => { setNome(text); setErrors(prev => ({ ...prev, nome: null })); }}
       />
+      {errors.nome && <Text style={styles.errorText}>{errors.nome}</Text>}
 
-      {/* Campo de E-mail */}
       <TextInput
         style={styles.input}
         placeholder="E-mail"
         placeholderTextColor="gray"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(text) => { setEmail(text); setErrors(prev => ({ ...prev, email: null })); }}
         keyboardType="email-address"
       />
+      {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
-      {/* Campo de Senha */}
       <TextInput
         style={styles.input}
         placeholder="Senha"
         placeholderTextColor="gray"
         value={senha}
-        onChangeText={setSenha}
+        onChangeText={(text) => { setSenha(text); setErrors(prev => ({ ...prev, senha: null })); }}
         secureTextEntry
       />
+      {errors.senha && <Text style={styles.errorText}>{errors.senha}</Text>}
 
-      {/* Campo de Confirmar Senha */}
       <TextInput
         style={styles.input}
         placeholder="Confirmar Senha"
         placeholderTextColor="gray"
         value={confirmarSenha}
-        onChangeText={setConfirmarSenha}
+        onChangeText={(text) => { setConfirmarSenha(text); setErrors(prev => ({ ...prev, confirmarSenha: null })); }}
         secureTextEntry
       />
+      {errors.confirmarSenha && <Text style={styles.errorText}>{errors.confirmarSenha}</Text>}
 
-      {/* Opção de tipo de usuário */}
-      <Text style={styles.optionText}>Escolha o tipo de usuário:</Text>
-      <View style={styles.radioContainer}>
-        <TouchableOpacity onPress={() => setTipoUsuario('cliente')} style={styles.radioButton}>
-          <View style={styles.radioContent}>
-            <Icon name="person" size={24} color={tipoUsuario === 'cliente' ? 'rgb(139,0,0)' : 'lightgray'} />
-            <Text style={tipoUsuario === 'cliente' ? styles.selectedText : styles.unselectedText}>Cliente</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setTipoUsuario('administrador')} style={styles.radioButton}>
-          <View style={styles.radioContent}>
-            <Icon name="build" size={24} color={tipoUsuario === 'administrador' ? 'rgb(139,0,0)' : 'lightgray'} />
-            <Text style={tipoUsuario === 'administrador' ? styles.selectedText : styles.unselectedText}>Administrador</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      {/* Campos adicionais para Administrador */}
-      {tipoUsuario === 'administrador' && (
-        <>
-          <TextInput
-            style={styles.input}
-            placeholder="Nome da Mecânica"
-            placeholderTextColor="gray"
-            value={nomeMecanica}
-            onChangeText={setNomeMecanica}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Telefone da Mecânica"
-            placeholderTextColor="gray"
-            value={telefoneMecanica}
-            onChangeText={setTelefoneMecanica}
-            keyboardType="phone-pad"
-          />
-        </>
-      )}
-
-      {/* Botão Continuar */}
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Continuar</Text>
       </TouchableOpacity>
 
-      {/* Texto para ir ao Login */}
       <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
         <Text style={styles.loginText}>Já tem uma conta? Faça Login</Text>
       </TouchableOpacity>
-
-    
     </View>
   );
 }
@@ -144,7 +139,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 10,
     padding: 15,
-    marginBottom: 15,
+    marginBottom: 5,
     fontSize: 16,
     backgroundColor: '#F2F2F2',
   },
@@ -166,33 +161,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  optionText: {
-    color: 'white',
-    fontSize: 16,
+  errorText: {
+    color: 'yellow',
+    fontSize: 14,
     marginBottom: 10,
-    textAlign: 'center',
   },
-  radioContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 20,
-  },
-  radioButton: {
-    padding: 10,
-    alignItems: 'center',
-  },
-  radioContent: {
-    flexDirection: 'row', // Alinhando o ícone e o texto na horizontal
-    alignItems: 'center', // Centralizando verticalmente
-  },
-  selectedText: {
-    color: 'white',
-    fontWeight: 'bold',
-    marginLeft: 5, // Espaçamento entre ícone e texto
-  },
-  unselectedText: {
-    color: 'lightgray',
-    marginLeft: 5, // Espaçamento entre ícone e texto
-  },
-  
 });
