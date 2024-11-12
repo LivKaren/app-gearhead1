@@ -1,6 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "react-native-paper";
 import { Ionicons } from 'react-native-vector-icons'; // Ícones do pacote Expo
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
 
 export default function CarroConfirma1Screen({ route, navigation }) {
   const { mechanic, selectedDate, selectedTime, carModel, selectedServices } = route.params;
@@ -11,6 +12,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
     return total + price;
   }, 0);
 
+  
   return (
     <View style={{ flex: 1, padding: 16 }}>
       {/* Título da página */}

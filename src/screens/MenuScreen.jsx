@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { View, ScrollView, Image, Dimensions, Text, TouchableOpacity, Animated } from "react-native";
 import { useState, useRef, useEffect } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer"; // Importa o Drawer
+import { useFavorites } from "../screens/FavoritesContext";
 
 export default function MenuScreen({ navigation }) {
     const [location, setLocation] = useState("");
@@ -59,12 +60,19 @@ export default function MenuScreen({ navigation }) {
         setCurrentCategoryIndex(nextCategoryIndex);
     };
 
-    const toggleHeart = (index) => {
+    const { addFavorite } = useFavorites();
+
+    const toggleHeart = (index, cardInfo) => {
         const newHearts = [...hearts];
-        newHearts[index] = !newHearts[index]; // Alterna o estado do coração clicado
+        newHearts[index] = !newHearts[index];
         setHearts(newHearts);
+    
+        if (newHearts[index]) {
+            addFavorite({ ...cardInfo, id: index }); // Adiciona o id único
+        }
     };
 
+  
     
 
     return (
@@ -196,7 +204,7 @@ export default function MenuScreen({ navigation }) {
 
     {/* Card 3 - Favoritos */}
     <TouchableOpacity
-        onPress={() => navigation.navigate("LoginScreen")}
+        onPress={() => navigation.navigate("FavoritosScreen")}
         style={{
             width: "30%",
             aspectRatio: 1,
@@ -220,184 +228,169 @@ export default function MenuScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-            {/* Cards de Recomendação */}
-            <View style={{ flexDirection: "column", paddingHorizontal: 16 }}>
-                {/* Card 1 - Joinville Car */}
-                <TouchableOpacity
-                    style={{
-                        width: "100%",
-                        backgroundColor: "#fff",
-                        borderRadius: 10,
-                        padding: 16,
-                        marginBottom: 16,
-                        shadowColor: "#000",
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.2,
-                        shadowRadius: 2,
-                        elevation: 3,
-                    }}
-                    onPress={() => {
-                        toggleHeart(0); // Alterna o estado do coração ao clicar
-                        navigation.navigate("MecanicaDetalhe1Screen", {
-                            mechanic: {
-                                image: "https://scontent.fbnu3-1.fna.fbcdn.net/v/t39.30808-6/302200185_476642891142263_6721106998601686659_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=I-LJndsFdV8Q7kNvgGUtAm-&_nc_ht=scontent.fbnu3-1.fna&_nc_gid=Aj2Qmm04i4gp9UARFwg2KlQ&oh=00_AYC-gFH7VukqumP2Q6Ii1I2kYdQsqtv4YjEV1HgYoAPN5w&oe=670C8FFD",
-                                name: "Joinville Car",
-                                phone: "(47) 3438-1726",
-                                location: " R. Anitápolis, 576 - Itaum, Joinville - SC, 89210-680",
-                                hours: "08:00 - 18:00",
-                                rating: 4.7,
-                                description: "Somos especialistas em serviços de manutenção automotiva...",
-                            },
-                        });
-                    }}
-                >
-                    <Image
-                        source={{ uri: "https://scontent.fbnu3-1.fna.fbcdn.net/v/t39.30808-6/302200185_476642891142263_6721106998601686659_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=I-LJndsFdV8Q7kNvgGUtAm-&_nc_ht=scontent.fbnu3-1.fna&_nc_gid=Aj2Qmm04i4gp9UARFwg2KlQ&oh=00_AYC-gFH7VukqumP2Q6Ii1I2kYdQsqtv4YjEV1HgYoAPN5w&oe=670C8FFD" }}
-                        style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
-                    />
-                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>Joinville Car</Text>
-                    <Text>⭐ 4.7</Text>
-                    <Text>Aberto: 08:00 - 18:00</Text>
-                    <Text>3 km de distância</Text>
-                    <Button
-    mode="contained"
-    onPress={() => navigation.navigate("MecanicaDetalhe1Screen", {
-        mechanic: {
-            image: "https://scontent.fbnu3-1.fna.fbcdn.net/v/t39.30808-6/302200185_476642891142263_6721106998601686659_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=I-LJndsFdV8Q7kNvgGUtAm-&_nc_ht=scontent.fbnu3-1.fna&_nc_gid=Aj2Qmm04i4gp9UARFwg2KlQ&oh=00_AYC-gFH7VukqumP2Q6Ii1I2kYdQsqtv4YjEV1HgYoAPN5w&oe=670C8FFD",
+               {/* Cards de Recomendação */}
+               <View style={{ flexDirection: "column", paddingHorizontal: 16 }}>
+
+{/* Card 1 - Joinville Car */}
+<TouchableOpacity
+    style={{
+        width: "100%",
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        padding: 16,
+        marginBottom: 16,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 3,
+    }}
+    onPress={() => {
+        navigation.navigate("MecanicaDetalhe1Screen", {
+            mechanic: {
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5RHP8DtJuQfkoQyx08QOmJ1qrIG8GC0K3AA&s",
+                name: "Joinville Car",
+                phone: "(47) 3438-1726",
+                location: "R. Anitápolis, 576 - Itaum, Joinville - SC, 89210-680",
+                hours: "08:00 - 18:00",
+                rating: 4.7,
+                description: "Somos especialistas em serviços de manutenção automotiva...",
+            },
+        });
+    }}
+>
+    <Image
+        source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5RHP8DtJuQfkoQyx08QOmJ1qrIG8GC0K3AA&s" }}
+        style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
+    />
+    <Text style={{ fontSize: 18, fontWeight: "bold" }}>Joinville Car</Text>
+    <Text>⭐ 4.7</Text>
+    <Text>Aberto: 08:00 - 18:00</Text>
+    <Text>3 km de distância</Text>
+
+    {/* Ícone do coração */}
+    <TouchableOpacity
+        onPress={() => toggleHeart(0, { 
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5RHP8DtJuQfkoQyx08QOmJ1qrIG8GC0K3AA&s",
             name: "Joinville Car",
             phone: "(47) 3438-1726",
-            location: " R. Anitápolis, 576 - Itaum, Joinville - SC, 89210-680",
+            location: "R. Anitápolis, 576 - Itaum, Joinville - SC, 89210-680",
             hours: "08:00 - 18:00",
             rating: 4.7,
-            description: "Somos especialistas em serviços de manutenção automotiva...",
-        },
-    })}
-    style={{ marginTop: 10, alignSelf: "flex-end" }}
->
-    Agendar
-</Button>
-                    {/* Ícone do coração */}
-                    <TouchableOpacity onPress={() => toggleHeart(0)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[0] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
-                    </TouchableOpacity>
-                </TouchableOpacity>
+            description: "Somos especialistas em serviços de manutenção automotiva..."
+        })}
+        style={{ position: 'absolute', right: 16, top: 16 }}
+    >
+        <Icon name={hearts[0] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
+    </TouchableOpacity>
+</TouchableOpacity>
 
-                {/* Card 2 - Js Auto Center */}
-                <TouchableOpacity
-                    style={{
-                        width: "100%",
-                        backgroundColor: "#fff",
-                        borderRadius: 10,
-                        padding: 16,
-                        marginBottom: 16,
-                        shadowColor: "#000",
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.2,
-                        shadowRadius: 2,
-                        elevation: 3,
-                    }}
-                    onPress={() => {
-                        toggleHeart(1); // Alterna o estado do coração ao clicar
-                        navigation.navigate("MecanicaDetalhe2Screen", {
-                            mechanic: {
-                                image: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/22825664000122/whatsapp-image-2020-08-13-at-17.26.15-979efa20-956f-4de4-acc4-eec6f608b79c.jpeg",
-                                name: "Js Auto Center",
-                                phone: "(11) 98888-8888",
-                                location: "Rua das Oficinas, 456",
-                                hours: "09:00 - 19:00",
-                                rating: 4.0,
-                                description: "Atendemos todas as marcas e modelos com garantia de qualidade...",
-                            },
-                        });
-                    }}
-                >
-                    <Image
-                        source={{ uri: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/22825664000122/whatsapp-image-2020-08-13-at-17.26.15-979efa20-956f-4de4-acc4-eec6f608b79c.jpeg" }}
-                        style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
-                    />
-                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>Js Auto Center</Text>
-                    <Text>⭐ 4.0</Text>
-                    <Text>Aberto: 09:00 - 19:00</Text>
-                    <Text>5 km de distância</Text>
-                    <Button
-    mode="contained"
-    onPress={() => navigation.navigate("MecanicaDetalhe2Screen", {
-        mechanic: {
+{/* Card 2 - Js Auto Center */}
+<TouchableOpacity
+    style={{
+        width: "100%",
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        padding: 16,
+        marginBottom: 16,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 3,
+    }}
+    onPress={() => {
+        navigation.navigate("MecanicaDetalhe2Screen", {
+            mechanic: {
+                image: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/22825664000122/whatsapp-image-2020-08-13-at-17.26.15-979efa20-956f-4de4-acc4-eec6f608b79c.jpeg",
+                name: "Js Auto Center",
+                phone: "(11) 98888-8888",
+                location: "Rua das Oficinas, 456",
+                hours: "09:00 - 19:00",
+                rating: 4.0,
+                description: "Atendemos todas as marcas e modelos com garantia de qualidade...",
+            },
+        });
+    }}
+>
+    <Image
+        source={{ uri: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/22825664000122/whatsapp-image-2020-08-13-at-17.26.15-979efa20-956f-4de4-acc4-eec6f608b79c.jpeg" }}
+        style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
+    />
+    <Text style={{ fontSize: 18, fontWeight: "bold" }}>Js Auto Center</Text>
+    <Text>⭐ 4.0</Text>
+    <Text>Aberto: 09:00 - 19:00</Text>
+    <Text>5 km de distância</Text>
+
+    <TouchableOpacity
+        onPress={() => toggleHeart(1, { 
             image: "https://maintenance-minio.kdminhaoficina.com.br/maintenance/public/system/establishment/22825664000122/whatsapp-image-2020-08-13-at-17.26.15-979efa20-956f-4de4-acc4-eec6f608b79c.jpeg",
             name: "Js Auto Center",
             phone: "(11) 98888-8888",
             location: "Rua das Oficinas, 456",
             hours: "09:00 - 19:00",
             rating: 4.0,
-            description: "Atendemos todas as marcas e modelos com garantia de qualidade...",
-        },
-    })}
-    style={{ marginTop: 10, alignSelf: "flex-end" }}
->
-    Agendar
-</Button>
-                    <TouchableOpacity onPress={() => toggleHeart(1)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[1] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
-                    </TouchableOpacity>
-                </TouchableOpacity>
+            description: "Atendemos todas as marcas e modelos com garantia de qualidade..."
+        })}
+        style={{ position: 'absolute', right: 16, top: 16 }}
+    >
+        <Icon name={hearts[1] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
+    </TouchableOpacity>
+</TouchableOpacity>
 
-                {/* Card 3 - Mecânica 123 */}
-                <TouchableOpacity
-                    style={{
-                        width: "100%",
-                        backgroundColor: "#fff",
-                        borderRadius: 10,
-                        padding: 16,
-                        shadowColor: "#000",
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.2,
-                        shadowRadius: 2,
-                        elevation: 3,
-                    }}
-                    onPress={() => {
-                        toggleHeart(2); // Alterna o estado do coração ao clicar
-                        navigation.navigate("MecanicaDetalhe3Screen", {
-                            mechanic: {
-                                image: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg",
-                                name: "REDCAR Mecânica Automotiva",
-                                phone: "(11) 97777-7777",
-                                location: " Rua Plácido Affonso Rausis, 160 - Nova Brasília, Joinville - SC",
-                                hours: "08:00 - 18:00",
-                                rating: 4.7,
-                                description: "Mecânica especializada em reparos rápidos e eficientes...",
-                            },
-                        });
-                    }}
-                >
-                    <Image
-                        source={{ uri: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg" }}
-                        style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
-                    />
-                    <Text style={{ fontSize: 18, fontWeight: "bold" }}>REDCAR Mecânica Automotiva</Text>
-                    <Text>⭐ 4.7</Text>
-                    <Text>Aberto: 08:00 - 18:00</Text>
-                    <Text>2 km de distância</Text>
-                    <Button
-    mode="contained"
-    onPress={() => navigation.navigate("MecanicaDetalhe3Screen", {
-        mechanic: {
+{/* Card 3 - REDCAR Mecânica Automotiva */}
+<TouchableOpacity
+    style={{
+        width: "100%",
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        padding: 16,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 3,
+    }}
+    onPress={() => {
+        navigation.navigate("MecanicaDetalhe3Screen", {
+            mechanic: {
+                image: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg",
+                name: "REDCAR Mecânica Automotiva",
+                phone: "(11) 97777-7777",
+                location: "Rua Plácido Affonso Rausis, 160 - Nova Brasília, Joinville - SC",
+                hours: "08:00 - 18:00",
+                rating: 4.7,
+                description: "Mecânica especializada em reparos rápidos e eficientes...",
+            },
+        });
+    }}
+>
+    <Image
+        source={{ uri: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg" }}
+        style={{ width: "100%", height: 160, borderRadius: 10, marginBottom: 10 }}
+    />
+    <Text style={{ fontSize: 18, fontWeight: "bold" }}>REDCAR Mecânica Automotiva</Text>
+    <Text>⭐ 4.7</Text>
+    <Text>Aberto: 08:00 - 18:00</Text>
+    <Text>2 km de distância</Text>
+
+    <TouchableOpacity
+        onPress={() => toggleHeart(2, { 
             image: "https://www.redcarmecanica.com.br/arquivos/LoginID_94/FotosApresentacaoID_111/WhatsApp-Image-2022-04-06-at-15-02-01-1815.jpeg",
             name: "REDCAR Mecânica Automotiva",
-            phone: "(11) 98888-8888",
-            location: " Rua Plácido Affonso Rausis, 160 - Nova Brasília, Joinville - SC",
+            phone: "(11) 97777-7777",
+            location: "Rua Plácido Affonso Rausis, 160 - Nova Brasília, Joinville - SC",
             hours: "08:00 - 18:00",
-            rating: 4.0,
-            description: "Atendemos todas as marcas e modelos com garantia de qualidade...",
-        },
-    })}
-    style={{ marginTop: 10, alignSelf: "flex-end" }}
->
-    Agendar
-</Button>
-                    <TouchableOpacity onPress={() => toggleHeart(2)} style={{ position: 'absolute', right: 16, top: 16 }}>
-                        <Icon name={hearts[2] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
-                    </TouchableOpacity>
-                </TouchableOpacity>
+            rating: 4.7,
+            description: "Mecânica especializada em reparos rápidos e eficientes..."
+        })}
+        style={{ position: 'absolute', right: 16, top: 16 }}
+    >
+        <Icon name={hearts[2] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
+    </TouchableOpacity>
+</TouchableOpacity>
+
+
                 </View>
                 </View>
             </ScrollView>
