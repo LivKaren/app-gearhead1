@@ -188,7 +188,7 @@ export default function MenuScreen({ navigation }) {
 
     {/* Card 2 - Meu Carro */}
     <TouchableOpacity
-        onPress={() => navigation.navigate("LoginScreen")}
+        onPress={() => navigation.navigate("MeuCarroScreen")}
         style={{
             width: "30%",
             aspectRatio: 1,

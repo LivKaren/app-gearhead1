@@ -87,7 +87,7 @@ function DrawerNavigator() {
 
       {/* Tela Carro */}
       <Drawer.Screen
-        name="Meu Carro"
+        name="MeuCarroScreen"
         component={MeuCarroScreen}
         options={{
           title: "Meu Carro", 

@@ -1,18 +1,35 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "react-native-paper";
-import { Ionicons } from 'react-native-vector-icons'; // Ícones do pacote Expo
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
+import { Ionicons } from 'react-native-vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CarroConfirma1Screen({ route, navigation }) {
   const { mechanic, selectedDate, selectedTime, carModel, selectedServices } = route.params;
 
   // Calcular o total do pagamento
   const totalPayment = selectedServices.reduce((total, service) => {
-    const price = parseFloat(service.price.replace("R$", "").replace(",", ".").trim()); // Remove "R$" e converte para float
+    const price = parseFloat(service.price.replace("R$", "").replace(",", ".").trim());
     return total + price;
   }, 0);
 
-  
+  // Função para salvar as informações no AsyncStorage
+  const saveCarInfo = async () => {
+    try {
+      const carInfo = {
+        mechanic,
+        selectedDate,
+        selectedTime,
+        carModel,
+        selectedServices,
+        totalPayment
+      };
+      await AsyncStorage.setItem("carInfo", JSON.stringify(carInfo));
+      console.log("Informações do carro salvas com sucesso!");
+    } catch (error) {
+      console.error("Erro ao salvar as informações do carro:", error);
+    }
+  };
+
   return (
     <View style={{ flex: 1, padding: 16 }}>
       {/* Título da página */}
@@ -66,7 +83,6 @@ export default function CarroConfirma1Screen({ route, navigation }) {
           <Text>Data: {new Date(selectedDate).toLocaleDateString('pt-BR')}</Text>
           <Text>Horário: {selectedTime.map((slot) => slot.time).join(", ")}</Text>
         </View>
-        {/* Ícone de edição */}
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="md-create" size={24} color="black" />
         </TouchableOpacity>
@@ -91,7 +107,6 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         }}
       >
         <Text>{carModel}</Text>
-        {/* Ícone de edição */}
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="md-create" size={24} color="black" />
         </TouchableOpacity>
@@ -136,22 +151,21 @@ export default function CarroConfirma1Screen({ route, navigation }) {
       </View>
 
       {/* Botão de confirmar */}
-      
       <Button
-  mode="contained"
-  onPress={() => {
-    // Navegar para a tela de pagamento passando os parâmetros necessários
-    navigation.navigate("PagamentoScreen", {
-      mechanic,         // Passa a mecânica selecionada (opcional, se precisar usar)
-      selectedDate,     // Passa a data selecionada
-      selectedTime,     // Passa o horário selecionado
-      carModel,         // Passa o modelo do carro
-      selectedServices, // Passa os serviços selecionados
-    });
-  }}
->
-  Confirmar
-</Button>
+        mode="contained"
+        onPress={() => {
+          saveCarInfo();  // Salvar informações do carro
+          navigation.navigate("PagamentoScreen", {
+            mechanic,
+            selectedDate,
+            selectedTime,
+            carModel,
+            selectedServices,
+          });
+        }}
+      >
+        Confirmar
+      </Button>
     </View>
   );
 }
