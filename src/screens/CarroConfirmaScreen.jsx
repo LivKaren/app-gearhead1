@@ -13,10 +13,10 @@ export default function CarroConfirma1Screen({ route, navigation }) {
 
   return (
     <View style={{ flex: 1, padding: 16 }}>
-      {/* Título da página */}
+    
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Confirmação</Text>
 
-      {/* Mini card da mecânica selecionada */}
+    
       <View
         style={{
           backgroundColor: "#fff",
@@ -42,7 +42,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         </View>
       </View>
 
-      {/* Seção: Carro, serviço, data e hora */}
+      
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Data e hora</Text>
       <View
         style={{
@@ -64,13 +64,13 @@ export default function CarroConfirma1Screen({ route, navigation }) {
           <Text>Data: {new Date(selectedDate).toLocaleDateString('pt-BR')}</Text>
           <Text>Horário: {selectedTime.map((slot) => slot.time).join(", ")}</Text>
         </View>
-        {/* Ícone de edição */}
+      
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="md-create" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
-      {/* Seção: Tipo do Carro */}
+    
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Tipo do Carro</Text>
       <View
         style={{
@@ -89,13 +89,13 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         }}
       >
         <Text>{carModel}</Text>
-        {/* Ícone de edição */}
+       
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="md-create" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
-      {/* Seção: Serviços */}
+     
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Serviços</Text>
       <View
         style={{
@@ -115,7 +115,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         ))}
       </View>
 
-      {/* Seção: Pagamento Total */}
+    
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Pagamento Total</Text>
       <View
         style={{
@@ -133,7 +133,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>{`R$ ${totalPayment.toFixed(2).replace(".", ",")}`}</Text>
       </View>
 
-      {/* Botão de confirmar */}
+   
       
       <Button
   mode="contained"

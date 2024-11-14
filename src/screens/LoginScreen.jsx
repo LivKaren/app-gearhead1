@@ -9,31 +9,56 @@ export default function LoginScreen() {
   
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [senhaError, setSenhaError] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   const handleLogin = async () => {
+    let valid = true;
+
+    if (email === '') {
+      setEmailError('O campo de e-mail é obrigatório.');
+      valid = false;
+    } else {
+      setEmailError('');
+    }
+
+    if (senha === '') {
+      setSenhaError('O campo de senha é obrigatório.');
+      valid = false;
+    } else {
+      setSenhaError('');
+    }
+
+    if (!valid) return;
+
     try {
       // Tenta autenticar o usuário com o Firebase
       await signInWithEmailAndPassword(auth, email, senha);
       Alert.alert("Login bem-sucedido!");
+      setLoginError('');
       navigation.navigate('HomeScreen'); // Redireciona para a HomeScreen
     } catch (error) {
-      const errorMessage = 
-        error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password'
-          ? 'Usuário não encontrado ou senha incorreta. Verifique suas credenciais ou crie uma nova conta.'
-          : 'Erro ao fazer login: ' + error.message;
-      Alert.alert(errorMessage);
+      // Verifica se o erro é devido ao usuário não encontrado
+      if (error.code === 'auth/user-not-found') {
+        setLoginError('Não existe uma conta com estas credenciais.');
+      } else if (error.code === 'auth/wrong-password') {
+        setLoginError('Senha incorreta. Verifique suas credenciais.');
+      } else {
+        setLoginError('Cheque se as credenciais estão corretas');
+      }
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* Título "Bem-vindo de volta!" */}
+      
       <Text style={styles.titleText}>Bem-vindo de volta!</Text>
 
-      {/* Subtítulo */}
+     
       <Text style={styles.welcomeText}>Faça login para continuar.</Text>
 
-      {/* Campo de E-mail */}
+    
       <TextInput
         style={styles.input}
         placeholder="E-mail"
@@ -42,8 +67,9 @@ export default function LoginScreen() {
         onChangeText={setEmail}
         keyboardType="email-address"
       />
+      {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
-      {/* Campo de Senha */}
+     
       <TextInput
         style={styles.input}
         placeholder="Senha"
@@ -52,18 +78,22 @@ export default function LoginScreen() {
         onChangeText={setSenha}
         secureTextEntry
       />
+      {senhaError ? <Text style={styles.errorText}>{senhaError}</Text> : null}
 
-      {/* Botão de Login */}
+     
+      {loginError ? <Text style={styles.errorText}>{loginError}</Text> : null}
+
+      
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
-      {/* Texto para ir ao Cadastro */}
+      
       <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
         <Text style={styles.registerText}>Não tem uma conta? Crie uma agora</Text>
       </TouchableOpacity>
 
-      {/* Imagem de carro */}
+      
       <Image
         source={{ uri: 'https://media.istockphoto.com/id/1353185042/pt/vetorial/professional-automobile-maintenance-and-service-application-car-repair-app-concept.jpg?s=612x612&w=0&k=20&c=X6mmIvVj0UisWOPsq99xmmg8cQGVlg5MCm9debPnupE=' }}
         style={styles.carImage}
@@ -100,9 +130,14 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 10,
     padding: 15,
-    marginBottom: 15,
+    marginBottom: 5,
     fontSize: 16,
     backgroundColor: '#F2F2F2',
+  },
+  errorText: {
+    color: 'yellow',
+    fontSize: 14,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: 'rgb(139,0,0)',
@@ -122,7 +157,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
     flexWrap: 'wrap',
-    maxWidth: '%60',
+    maxWidth: '60%',
     alignSelf: 'center',
   },
   carImage: {

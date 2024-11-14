@@ -84,7 +84,7 @@ export default function MecanicaDetalhe2Screen({ route, navigation }) {
         </View>
       </View>
 
-      {/* Botão "Continuar" que aparece apenas se houver serviços selecionados */}
+     
       {selectedServices.length > 0 && (
   <Button
     mode="contained"

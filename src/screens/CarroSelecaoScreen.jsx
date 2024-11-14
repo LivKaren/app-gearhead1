@@ -47,7 +47,7 @@ export default function CarroSelecao1Screen({ route, navigation }) {
     <ScrollView style={{ padding: 16 }}>
       <Text style={{ color: 'rgb(139,0,0)',fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Selecione a marca do seu carro</Text>
 
-      {/* Cards de seleção de marca */}
+     
       <ScrollView horizontal style={{ flexDirection: "row" }}>
         {brands.map((brand) => (
           <TouchableOpacity
@@ -83,7 +83,7 @@ export default function CarroSelecao1Screen({ route, navigation }) {
         ))}
       </ScrollView>
 
-      {/* Caixa de texto para descrição do modelo do carro */}
+     
       <Text style={{ fontWeight: "bold", color: "rgb(139,0,0)", marginTop: 20, marginBottom: 10 }}>Adicione a descrição do modelo do carro</Text>
       <TextInput
         placeholder="Digite o modelo do carro, placa do carro ou alguma descrição"
@@ -98,7 +98,7 @@ export default function CarroSelecao1Screen({ route, navigation }) {
         }}
       />
 
-      {/* Seleção de data com calendário */}
+    
       <Text style={{fontWeight: "bold", color: "rgb(139,0,0)", marginBottom: 10 }}>Selecionar a data</Text>
       <Calendar
         onDayPress={(day) => {
@@ -120,7 +120,7 @@ export default function CarroSelecao1Screen({ route, navigation }) {
         <Text style={{ marginBottom: 20 }}>Data selecionada: {new Date(selectedDate).toLocaleDateString('pt-BR')}</Text>
       ) : null}
 
-      {/* Seção de seleção de horário */}
+   
       <Text style={{ fontWeight: "bold", color: "rgb(139,0,0)", marginBottom: 10 }}>Selecione o horário</Text>
       <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
         {timeSlots.map((slot) => (
@@ -152,7 +152,7 @@ export default function CarroSelecao1Screen({ route, navigation }) {
         ))}
       </View>
 
-      {/* Botão de continuar */}
+     
       <Button
         mode="contained"
         onPress={() =>

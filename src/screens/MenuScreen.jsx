@@ -162,7 +162,7 @@ export default function MenuScreen({ navigation }) {
                 </View>
 
                 <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", paddingHorizontal: 16 }}>
-    {/* Card 1 - Endereço */}
+    
     <TouchableOpacity
         onPress={() => navigation.navigate("LoginScreen")}
         style={{
@@ -178,7 +178,7 @@ export default function MenuScreen({ navigation }) {
         <Text style={{ color: "white" }}>Endereço</Text>
     </TouchableOpacity>
 
-    {/* Card 2 - Meu Carro */}
+   
     <TouchableOpacity
         onPress={() => navigation.navigate("LoginScreen")}
         style={{
@@ -194,7 +194,7 @@ export default function MenuScreen({ navigation }) {
         <Text style={{ color: "white" }}>Meu carro</Text>
     </TouchableOpacity>
 
-    {/* Card 3 - Favoritos */}
+  
     <TouchableOpacity
         onPress={() => navigation.navigate("LoginScreen")}
         style={{
@@ -220,9 +220,9 @@ export default function MenuScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-            {/* Cards de Recomendação */}
+          
             <View style={{ flexDirection: "column", paddingHorizontal: 16 }}>
-                {/* Card 1 - Joinville Car */}
+                
                 <TouchableOpacity
                     style={{
                         width: "100%",
@@ -276,13 +276,13 @@ export default function MenuScreen({ navigation }) {
 >
     Agendar
 </Button>
-                    {/* Ícone do coração */}
+                 
                     <TouchableOpacity onPress={() => toggleHeart(0)} style={{ position: 'absolute', right: 16, top: 16 }}>
                         <Icon name={hearts[0] ? "favorite" : "favorite-border"} size={40} color="#e43921" />
                     </TouchableOpacity>
                 </TouchableOpacity>
 
-                {/* Card 2 - Js Auto Center */}
+               
                 <TouchableOpacity
                     style={{
                         width: "100%",
@@ -341,7 +341,7 @@ export default function MenuScreen({ navigation }) {
                     </TouchableOpacity>
                 </TouchableOpacity>
 
-                {/* Card 3 - Mecânica 123 */}
+               
                 <TouchableOpacity
                     style={{
                         width: "100%",

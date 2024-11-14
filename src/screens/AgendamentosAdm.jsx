@@ -59,7 +59,7 @@ export default function VerAgendamentos() {
       <Text>Ano: {item.ano}</Text>
       <Text>Placa: {item.placa}</Text>
       <Text>Donos: {item.dono}</Text>
-      <Text>Data/Hora: {item.dataHora}</Text> {/* Exibindo a data/hora */}
+      <Text>Data/Hora: {item.dataHora}</Text> 
     </View>
   );
 
