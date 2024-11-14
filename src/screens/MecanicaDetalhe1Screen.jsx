@@ -1,12 +1,14 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { Title, Button, Checkbox } from "react-native-paper";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../config/firebase'
 
 export default function MecanicaDetalhe1Screen({ route, navigation }) {
   const { mechanic } = route.params;
 
   // Lista de serviços da mecânica
+  // TODO: fazer integração com o Filestore
   const services = [
     { id: 1, image: "https://www.pngall.com/wp-content/uploads/2017/03/Oil-Free-PNG-Image.png", title: "Troca de óleo", price: "R$ 150,00" },
     { id: 2, image: "https://png.pngtree.com/png-vector/20240803/ourmid/pngtree-wheel-alignment-png-image_13344567.png", title: "Alinhamento", price: "R$ 120,00" },
@@ -21,6 +23,25 @@ export default function MecanicaDetalhe1Screen({ route, navigation }) {
   ];
 
   const [selectedServices, setSelectedServices] = useState([]);
+
+
+  const buscarServicos = async () => {
+    const servicosRef = collection(db, "servicos");
+    const querySnapshot = await getDocs(servicosRef);
+    const servicos = querySnapshot.docs.map(
+      (doc) => ({
+        id: doc.id,
+        ...doc.data()
+
+      })
+    )
+    console.log(servicos);
+
+  }
+
+  useEffect(() => {
+    buscarServicos();
+  }, []);
 
   // Função para marcar/desmarcar serviços
   const toggleService = (serviceId) => {
@@ -37,14 +58,14 @@ export default function MecanicaDetalhe1Screen({ route, navigation }) {
         source={{ uri: mechanic.image }}
         style={{ width: "100%", height: 200, borderRadius: 10, marginBottom: 16 }}
       />
-      <Title style={{ fontWeight: "bold",color: 'rgb(139,0,0)' }}>{mechanic.name}</Title>
+      <Title style={{ fontWeight: "bold", color: 'rgb(139,0,0)' }}>{mechanic.name}</Title>
       <Text>Telefone: {mechanic.phone}</Text>
       <Text>Localização: {mechanic.location}</Text>
       <Text>Horário: {mechanic.hours}</Text>
       <Text>Avaliação: ⭐ {mechanic.rating}</Text>
 
       <View style={{ marginVertical: 20 }}>
-        <Title style={{ fontWeight: "bold",color: 'rgb(139,0,0)' }}>Sobre</Title>
+        <Title style={{ fontWeight: "bold", color: 'rgb(139,0,0)' }}>Sobre</Title>
         <Text>{mechanic.description}</Text>
       </View>
 
@@ -84,23 +105,23 @@ export default function MecanicaDetalhe1Screen({ route, navigation }) {
         </View>
       </View>
 
-      {/* Botão "Continuar" que aparece apenas se houver serviços selecionados */}
+
       {selectedServices.length > 0 && (
-  <Button
-    mode="contained"
-    onPress={() =>
-      navigation.navigate("CarroSelecaoScreen", {
-        mechanic,  // Passa a mecânica selecionada
-        selectedServices: services.filter((service) =>
-          selectedServices.includes(service.id)
-        ),
-      })
-    }
-    style={{ marginTop: 20 }}
-  >
-    Continuar
-  </Button>
-)}
+        <Button
+          mode="contained"
+          onPress={() =>
+            navigation.navigate("CarroSelecaoScreen", {
+              mechanic,  // Passa a mecânica selecionada
+              selectedServices: services.filter((service) =>
+                selectedServices.includes(service.id)
+              ),
+            })
+          }
+          style={{ marginTop: 20 }}
+        >
+          Continuar
+        </Button>
+      )}
     </ScrollView>
   );
 }
