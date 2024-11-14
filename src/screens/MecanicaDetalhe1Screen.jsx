@@ -2,42 +2,29 @@ import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { Title, Button, Checkbox } from "react-native-paper";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from '../config/firebase'
+import { db } from '../config/firebase';
 
 export default function MecanicaDetalhe1Screen({ route, navigation }) {
   const { mechanic } = route.params;
-
-  // Lista de serviços da mecânica
-  // TODO: fazer integração com o Filestore
-  const services = [
-    { id: 1, image: "https://www.pngall.com/wp-content/uploads/2017/03/Oil-Free-PNG-Image.png", title: "Troca de óleo", price: "R$ 150,00" },
-    { id: 2, image: "https://png.pngtree.com/png-vector/20240803/ourmid/pngtree-wheel-alignment-png-image_13344567.png", title: "Alinhamento", price: "R$ 120,00" },
-    { id: 3, image: "https://www.tecfil.com.br/wp-content/uploads/2019/12/img-filtro-de-ar.png", title: "Filtros de ar", price: "R$ 500,00" },
-    { id: 4, image: "https://guinchoautosocorro.com.br/wp-content/uploads/2016/04/checklist-do-ve%C3%ADculo-antes-da-viagem.png", title: "Revisão geral", price: "R$ 300,00" },
-    { id: 5, image: "https://freiosbreque.com.br/wp-content/uploads/2021/01/troca-disco-freios-340x340.png", title: "Freios", price: "R$ 250,00" },
-    { id: 6, image: "https://griffepneus.com.br/website2021/wp-content/uploads/2021/03/Barulho-na-suspens%C3%A3o-Saiba-como-identificar-e-o-que-fazer-300x229.png", title: "Suspensão", price: "R$ 400,00" },
-    { id: 7, image: "https://cdni.iconscout.com/illustration/premium/thumb/pintura-de-carro-2162037-1818525.png?f=webp", title: "Pintura", price: "R$ 900,00" },
-    { id: 8, image: "https://dellavia.vteximg.com.br/arquivos/ids/161931/DESTINATION-LE3.png?v=638455026151500000", title: "Troca de pneu", price: "R$ 200,00" },
-    { id: 9, image: "https://lojaodasbaterias.com/wp-content/uploads/2021/09/Bateria-Moto-1024x834.png", title: "Bateria", price: "R$ 350,00" },
-    { id: 10, image: "https://png.pngtree.com/png-clipart/20231016/original/pngtree-engine-car-turbo-png-image_13325602.png", title: "Limpeza de motor", price: "R$ 180,00" },
-  ];
-
+  const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
 
-
+  // Função para buscar serviços do Firestore
   const buscarServicos = async () => {
-    const servicosRef = collection(db, "servicos");
-    const querySnapshot = await getDocs(servicosRef);
-    const servicos = querySnapshot.docs.map(
-      (doc) => ({
+    try {
+      const servicosRef = collection(db, "servicos");
+      const querySnapshot = await getDocs(servicosRef);
+      const servicos = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
-
-      })
-    )
-    console.log(servicos);
-
-  }
+        title: doc.data().nomeServico,
+        price: doc.data().precoServico,
+        image: "https://via.placeholder.com/50", // Placeholder para imagem, ajuste conforme necessário
+      }));
+      setServices(servicos);
+    } catch (error) {
+      console.error("Erro ao buscar serviços:", error);
+    }
+  };
 
   useEffect(() => {
     buscarServicos();
@@ -105,13 +92,12 @@ export default function MecanicaDetalhe1Screen({ route, navigation }) {
         </View>
       </View>
 
-
       {selectedServices.length > 0 && (
         <Button
           mode="contained"
           onPress={() =>
             navigation.navigate("CarroSelecaoScreen", {
-              mechanic,  // Passa a mecânica selecionada
+              mechanic, // Passa a mecânica selecionada
               selectedServices: services.filter((service) =>
                 selectedServices.includes(service.id)
               ),
