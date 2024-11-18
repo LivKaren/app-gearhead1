@@ -9,8 +9,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@expo/metro-runtime": "~4.0.0",
     "@expo/vector-icons": "^14.0.4",
+=======
+    "@expo/metro-runtime": "~3.2.3",
+    "@expo/vector-icons": "^14.0.3",
+    "@react-native-async-storage/async-storage": "^1.24.0",
+>>>>>>> a5d0cae59aa374adc02d70511bc725d93a3bb1c8
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-navigation/drawer": "^7.0.3",
     "@react-navigation/material-bottom-tabs": "^6.2.29",

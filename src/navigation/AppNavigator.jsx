@@ -30,6 +30,9 @@ import CarroSelecaoScreen from "../screens/CarroSelecaoScreen";
 import CarroConfirmaScreen from "../screens/CarroConfirmaScreen";
 import PagamentoScreen from "../screens/PagamentoScreen";
 import ConcluidoScreen from "../screens/ConcluidoScreen";
+import { FavoritesProvider } from "../screens/FavoritesContext";
+import NotificacoesScreen from "../screens/NotificacoesScreen";
+
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -134,7 +137,8 @@ function UserDrawerNavigator() {
         headerTitleAlign: 'center',
       }}
     >
-      <Drawer.Screen
+
+  <Drawer.Screen
         name="MenuScreen"
         component={MenuScreen}
         options={{
@@ -142,8 +146,19 @@ function UserDrawerNavigator() {
           drawerIcon: ({ color, size }) => (
             <Icon name="home" color={color} size={size} />
           ),
+          headerRight: () => (
+            <Icon
+              name="notifications"      // Nome do ícone de sininho
+              size={25}                 // Tamanho do ícone
+              color="white"             // Cor do ícone
+              onPress={() => alert('Notificações!')} // Ação ao clicar no sininho
+              style={{ marginRight: 15 }} // Margem para distanciar do canto
+            />
+          ),
         }}
       />
+
+      {/* Tela Perfil */}
       <Drawer.Screen
         name="Meu Perfil"
         component={MeuPerfilScreen}
@@ -154,8 +169,10 @@ function UserDrawerNavigator() {
           ),
         }}
       />
+
+      {/* Tela Carro */}
       <Drawer.Screen
-        name="Meu Carro"
+        name="MeuCarroScreen"
         component={MeuCarroScreen}
         options={{
           title: "Meu Carro",
@@ -220,6 +237,7 @@ function UserDrawerNavigator() {
 
 export default function AppNavigator() {
   return (
+    <FavoritesProvider>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -232,6 +250,7 @@ export default function AppNavigator() {
           component={RegisterScreen}
           options={{ title: "Cadastro" }}
         />
+
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
@@ -284,5 +303,6 @@ export default function AppNavigator() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </FavoritesProvider>
   );
 }
