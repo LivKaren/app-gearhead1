@@ -44,7 +44,7 @@ export default function Inicial({ navigation }) {
       <View style={styles.buttonContainer}>
         <UniformButton
           title="Ver cadastros de contas"
-          onPress={() => slideButton(slideAnim1, 'contas cadastradas')}
+          onPress={() => slideButton(slideAnim1, 'Contas Cadastradas')}
           iconName="account"
           animatedStyle={{ transform: [{ translateX: slideAnim1 }] }}
         />
@@ -56,13 +56,13 @@ export default function Inicial({ navigation }) {
         />
         <UniformButton
           title="Cadastrar empresa"
-          onPress={() => slideButton(slideAnim3, 'cadastrar empresa')}
+          onPress={() => slideButton(slideAnim3, 'Cadastrar Empresa')}
           iconName="office-building"
           animatedStyle={{ transform: [{ translateX: slideAnim3 }] }}
         />
         <UniformButton
           title="Ver Histórico"
-          onPress={() => slideButton(slideAnim4, 'histórico de suporte')}
+          onPress={() => slideButton(slideAnim4, 'Histórico de Suporte')}
           iconName="history"
           animatedStyle={{ transform: [{ translateX: slideAnim4 }] }}
         />

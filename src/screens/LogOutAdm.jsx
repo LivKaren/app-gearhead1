@@ -6,7 +6,7 @@ export default function LogOutAdm() {
   const navigation = useNavigation();
 
   const handleLogOut = () => {
-    navigation.navigate('cadastrar empresa'); // Navega para a tela de Cadastrar Empresa
+    navigation.navigate('LoginScreen'); // Navega para a tela de Cadastrar Empresa
   };
 
   return (

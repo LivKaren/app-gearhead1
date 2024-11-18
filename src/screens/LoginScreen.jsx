@@ -6,7 +6,7 @@ import { auth } from '../config/firebase'; // ajuste o caminho se necessário
 
 export default function LoginScreen() {
   const navigation = useNavigation();
-  
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -16,6 +16,7 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     let valid = true;
 
+    // Validação do campo de e-mail
     if (email === '') {
       setEmailError('O campo de e-mail é obrigatório.');
       valid = false;
@@ -23,6 +24,7 @@ export default function LoginScreen() {
       setEmailError('');
     }
 
+    // Validação do campo de senha
     if (senha === '') {
       setSenhaError('O campo de senha é obrigatório.');
       valid = false;
@@ -33,13 +35,20 @@ export default function LoginScreen() {
     if (!valid) return;
 
     try {
-      // Tenta autenticar o usuário com o Firebase
+      // Verifica se o usuário é o administrador
+      if (email === 'admin@gmail.com' && senha === '123456') {
+        Alert.alert('Bem-vindo, administrador!');
+        navigation.navigate('AdminDrawerNavigator'); // Rota do administrador (ajuste o nome conforme sua navegação)
+        return;
+      }
+
+      // Tenta autenticar o usuário no Firebase
       await signInWithEmailAndPassword(auth, email, senha);
-      Alert.alert("Login bem-sucedido!");
+      Alert.alert('Login bem-sucedido!');
       setLoginError('');
-      navigation.navigate('HomeScreen'); // Redireciona para a HomeScreen
+      navigation.navigate('HomeScreen'); // Redireciona para a HomeScreen após login bem-sucedido
     } catch (error) {
-      // Verifica se o erro é devido ao usuário não encontrado
+      // Trata os erros específicos do Firebase
       if (error.code === 'auth/user-not-found') {
         setLoginError('Não existe uma conta com estas credenciais.');
       } else if (error.code === 'auth/wrong-password') {
@@ -52,13 +61,10 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      
       <Text style={styles.titleText}>Bem-vindo de volta!</Text>
-
-     
       <Text style={styles.welcomeText}>Faça login para continuar.</Text>
 
-    
+      {/* Campo de E-mail */}
       <TextInput
         style={styles.input}
         placeholder="E-mail"
@@ -69,7 +75,7 @@ export default function LoginScreen() {
       />
       {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
 
-     
+      {/* Campo de Senha */}
       <TextInput
         style={styles.input}
         placeholder="Senha"
@@ -80,20 +86,20 @@ export default function LoginScreen() {
       />
       {senhaError ? <Text style={styles.errorText}>{senhaError}</Text> : null}
 
-     
+      {/* Exibição de erro de login */}
       {loginError ? <Text style={styles.errorText}>{loginError}</Text> : null}
 
-      
+      {/* Botão de Login */}
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
-      
+      {/* Link para a tela de registro */}
       <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
         <Text style={styles.registerText}>Não tem uma conta? Crie uma agora</Text>
       </TouchableOpacity>
 
-      
+      {/* Imagem do carro */}
       <Image
         source={{ uri: 'https://media.istockphoto.com/id/1353185042/pt/vetorial/professional-automobile-maintenance-and-service-application-car-repair-app-concept.jpg?s=612x612&w=0&k=20&c=X6mmIvVj0UisWOPsq99xmmg8cQGVlg5MCm9debPnupE=' }}
         style={styles.carImage}

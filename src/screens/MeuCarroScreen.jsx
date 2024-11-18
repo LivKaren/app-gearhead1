@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function MeuCarroScreen() {
   const [carInfo, setCarInfo] = useState(null);

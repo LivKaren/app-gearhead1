@@ -9,7 +9,7 @@ import PaginaInicialAdm from "../screens/paginaInicialAdm";
 import VerCadastrosAdm from '../screens/VerCadastrosAdm';
 import VerAgendamentos from '../screens/AgendamentosAdm';
 import CadastrarEmpresaAdm from '../screens/CadastrarEmpresaAdm';
-import HistoricoAdm from '../screens/HistoricoContasAdm';
+import HistoricoAdm from '../screens/HistoricoSuporteAdm';
 import LogOutAdm from '../screens/LogOutAdm';
 
 // Importando as telas do segundo código
@@ -55,7 +55,7 @@ function AdminDrawerNavigator() {
       }}
     >
       <Drawer.Screen
-        name="Página Inicial"
+        name="Pagina Inicial"
         component={PaginaInicialAdm}
         options={{
           title: "GearHead - Administrador",
@@ -85,7 +85,7 @@ function AdminDrawerNavigator() {
         }}
       />
       <Drawer.Screen
-        name="Cadastrar Empresas"
+        name="Cadastrar Empresa"
         component={CadastrarEmpresaAdm}
         options={{
           title: "Cadastrar Empresas",

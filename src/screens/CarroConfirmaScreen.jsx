@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "react-native-paper";
 import { Ionicons } from 'react-native-vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function CarroConfirma1Screen({ route, navigation }) {
   const { mechanic, selectedDate, selectedTime, carModel, selectedServices } = route.params;
@@ -83,10 +83,6 @@ export default function CarroConfirma1Screen({ route, navigation }) {
           <Text>Data: {new Date(selectedDate).toLocaleDateString('pt-BR')}</Text>
           <Text>Horário: {selectedTime.map((slot) => slot.time).join(", ")}</Text>
         </View>
-<<<<<<< HEAD
-      
-=======
->>>>>>> a5d0cae59aa374adc02d70511bc725d93a3bb1c8
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="md-create" size={24} color="black" />
         </TouchableOpacity>
@@ -111,10 +107,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         }}
       >
         <Text>{carModel}</Text>
-<<<<<<< HEAD
        
-=======
->>>>>>> a5d0cae59aa374adc02d70511bc725d93a3bb1c8
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="md-create" size={24} color="black" />
         </TouchableOpacity>
@@ -158,12 +151,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>{`R$ ${totalPayment.toFixed(2).replace(".", ",")}`}</Text>
       </View>
 
-<<<<<<< HEAD
-   
-      
-=======
       {/* Botão de confirmar */}
->>>>>>> a5d0cae59aa374adc02d70511bc725d93a3bb1c8
       <Button
         mode="contained"
         onPress={() => {

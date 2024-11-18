@@ -8,6 +8,7 @@ export default function CadastrarEmpresa() {
   const [cep, setCep] = useState('');
   const [endereco, setEndereco] = useState('');
   const [telefone, setTelefone] = useState('');
+  const [cadastroSucesso, setCadastroSucesso] = useState(false);  // Novo estado para controle de sucesso do cadastro
 
   const handleCadastro = async () => {
     if (nomeEmpresa.length < 4) {
@@ -23,6 +24,7 @@ export default function CadastrarEmpresa() {
         telefone,
       });
 
+      setCadastroSucesso(true);  // Define sucesso após cadastro bem-sucedido
       Alert.alert('Sucesso', 'Empresa cadastrada com sucesso!');
     } catch (error) {
       console.error("Erro ao cadastrar empresa:", error);
@@ -83,6 +85,11 @@ export default function CadastrarEmpresa() {
       />
 
       <Button title="Cadastrar" color="rgb(139,0,0)" onPress={handleCadastro} />
+
+      {/* Exibe a mensagem de sucesso quando o cadastro for realizado */}
+      {cadastroSucesso && (
+        <Text style={styles.successText}>Cadastro feito com sucesso!</Text>
+      )}
     </View>
   );
 }
@@ -112,5 +119,11 @@ const styles = StyleSheet.create({
     color: 'red',
     marginBottom: 15,
     textAlign: 'center',
+  },
+  successText: {
+    color: 'green',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
