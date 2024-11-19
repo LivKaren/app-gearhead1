@@ -9,16 +9,19 @@ export default function MecanicaDetalhe1Screen({ route, navigation }) {
   const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
 
+  const imagem = require("./../../assets/logo.png");
+
   // Função para buscar serviços do Firestore
   const buscarServicos = async () => {
     try {
-      const servicosRef = collection(db, "servicos");
-      const querySnapshot = await getDocs(servicosRef);
-      const servicos = querySnapshot.docs.map((doc) => ({
+      const servicosRef = collection(db, "servicos"); // seleciona qua coleção (tabela) vamos buscar
+      const querySnapshot = await getDocs(servicosRef); // depois pegamos todos os dados desta coleção
+      const servicos = querySnapshot.docs.map((doc) => ({ //aqui começamos a fazer um looping
         id: doc.id,
         title: doc.data().nomeServico,
         price: doc.data().precoServico,
-        image: "https://via.placeholder.com/50", // Placeholder para imagem, ajuste conforme necessário
+        // image: "https://via.placeholder.com/50", // Placeholder para imagem, ajuste conforme necessário
+        image: imagem, // Placeholder para imagem, ajuste conforme necessário
       }));
       setServices(servicos);
     } catch (error) {
