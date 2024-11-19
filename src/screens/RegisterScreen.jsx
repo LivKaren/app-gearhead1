@@ -11,7 +11,18 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [cpf, setCpf] = useState('');
   const [errors, setErrors] = useState({});
+
+  // Função para formatar CPF enquanto o usuário digita
+  const formatarCPF = (texto) => {
+    texto = texto.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (texto.length > 11) texto = texto.slice(0, 11); // Limita a 11 dígitos
+    return texto
+      .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o primeiro ponto
+      .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o segundo ponto
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona o hífen
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -21,6 +32,9 @@ export default function RegisterScreen() {
     }
     if (!email.includes('@') || !email.includes('.')) {
       newErrors.email = "Por favor, insira um email válido.";
+    }
+    if (cpf.length !== 14) { // CPF formatado deve ter 14 caracteres
+      newErrors.cpf = "Por favor, insira um CPF válido.";
     }
     if (senha.length < 6) {
       newErrors.senha = "A senha deve ter pelo menos 6 caracteres.";
@@ -44,6 +58,7 @@ export default function RegisterScreen() {
       await setDoc(doc(collectionRef, user.uid), {
         nome,
         email,
+        cpf,
         tipoUsuario: 'cliente', // Define o tipo de usuário fixo como "cliente"
       });
 
@@ -80,6 +95,16 @@ export default function RegisterScreen() {
         keyboardType="email-address"
       />
       {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
+      <TextInput
+        style={styles.input}
+        placeholder="CPF"
+        placeholderTextColor="gray"
+        value={cpf}
+        onChangeText={(text) => { setCpf(formatarCPF(text)); setErrors(prev => ({ ...prev, cpf: null })); }}
+        keyboardType="numeric"
+      />
+      {errors.cpf && <Text style={styles.errorText}>{errors.cpf}</Text>}
 
       <TextInput
         style={styles.input}

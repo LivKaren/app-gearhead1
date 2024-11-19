@@ -1,6 +1,9 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Button } from "react-native-paper";
 import { Ionicons } from 'react-native-vector-icons';
+import { db } from "../config/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 
 export default function CarroConfirma1Screen({ route, navigation }) {
@@ -24,6 +27,14 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         totalPayment
       };
       await AsyncStorage.setItem("carInfo", JSON.stringify(carInfo));
+
+      // add carinfo to firebase collecion named "agendamentos"
+      const docRef = doc(db, "agendamentos", "carinfo");
+      setDoc(docRef, carInfo);
+      console.log("Car info saved to AsyncStorage and Firebase");
+
+
+
       console.log("Informações do carro salvas com sucesso!");
     } catch (error) {
       console.error("Erro ao salvar as informações do carro:", error);
@@ -32,10 +43,10 @@ export default function CarroConfirma1Screen({ route, navigation }) {
 
   return (
     <View style={{ flex: 1, padding: 16 }}>
-    
+
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>Confirmação</Text>
 
-    
+
       <View
         style={{
           backgroundColor: "#fff",
@@ -61,7 +72,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         </View>
       </View>
 
-      
+
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Data e hora</Text>
       <View
         style={{
@@ -88,7 +99,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         </TouchableOpacity>
       </View>
 
-    
+
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Tipo do Carro</Text>
       <View
         style={{
@@ -107,13 +118,13 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         }}
       >
         <Text>{carModel}</Text>
-       
+
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="md-create" size={24} color="black" />
         </TouchableOpacity>
       </View>
 
-     
+
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Serviços</Text>
       <View
         style={{
@@ -133,7 +144,7 @@ export default function CarroConfirma1Screen({ route, navigation }) {
         ))}
       </View>
 
-    
+
       <Text style={{ color: 'rgb(139,0,0)', fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Pagamento Total</Text>
       <View
         style={{

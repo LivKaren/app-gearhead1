@@ -1,59 +1,48 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TextInput } from 'react-native';
-
-function getEnterprises(){
-  
-}
-
-
-const contas = [
-  {
-    id: '1',
-    nome: 'João Silva',
-    email: 'joao.silva@example.com',
-    telefone: '(+55) 11 98765-4321',
-    cep: '01234-567',
-  },
-  {
-    id: '2',
-    nome: 'Maria Oliveira',
-    email: 'maria.oliveira@example.com',
-    telefone: '(+55) 21 99876-5432',
-    cep: '23456-789',
-  },
-  {
-    id: '3',
-    nome: 'Carlos Pereira',
-    email: 'carlos.pereira@example.com',
-    telefone: '(+55) 31 91234-5678',
-    cep: '34567-890',
-  },
-  {
-    id: '4',
-    nome: 'Ana Costa',
-    email: 'ana.costa@example.com',
-    telefone: '(+55) 41 99888-1234',
-    cep: '45678-901',
-  },
-];
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, TextInput, ActivityIndicator } from 'react-native';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../config/firebase'; // Certifique-se de ter configurado o Firebase corretamente
 
 export default function VerCadastrosAdm() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [contas, setContas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Função para filtrar as contas com base na pesquisa
+  // Função para buscar dados do Firebase
+  const getEnterprises = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'usuarios'));
+      const fetchedContas = [];
+      querySnapshot.forEach((doc) => {
+        fetchedContas.push({
+          id: doc.id, // ID único do documento
+          ...doc.data(), // Dados do documento
+        });
+      });
+      setContas(fetchedContas);
+      setLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar dados do Firebase:', error);
+    }
+  };
+
+  useEffect(() => {
+    getEnterprises();
+  }, []);
+
+  // Filtrar contas com base na pesquisa
   const filteredContas = contas.filter(
     (conta) =>
-      conta.nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      conta.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      conta.telefone.includes(searchQuery)
+      conta.nome?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      conta.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      conta.cpf?.includes(searchQuery)
   );
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Text style={styles.nome}>{item.nome}</Text>
       <Text>Email: {item.email}</Text>
-      <Text>Telefone: {item.telefone}</Text>
-      <Text>CEP: {item.cep}</Text>
+      <Text>CPF: {item.cpf}</Text>
     </View>
   );
 
@@ -62,16 +51,20 @@ export default function VerCadastrosAdm() {
       <Text style={styles.title}>Ver Cadastros de Contas</Text>
       <TextInput
         style={styles.searchInput}
-        placeholder="Pesquisar por nome ou email ou telefone"
+        placeholder="Pesquisar por nome, email ou CPF"
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
-      <FlatList
-        data={filteredContas}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.listContainer}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#000" />
+      ) : (
+        <FlatList
+          data={filteredContas}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContainer}
+        />
+      )}
     </View>
   );
 }

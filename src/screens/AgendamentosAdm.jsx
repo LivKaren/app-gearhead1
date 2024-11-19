@@ -1,65 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TextInput } from 'react-native';
-
-const veiculos = [
-  {
-    id: '1',
-    modelo: 'Fusca',
-    marca: 'Volkswagen',
-    ano: '1975',
-    placa: 'ABC-1234',
-    dono: 'João Silva',
-    dataHora: '2024-10-20 14:30', // Adicionado campo de data/hora
-  },
-  {
-    id: '2',
-    modelo: 'Civic',
-    marca: 'Honda',
-    ano: '2020',
-    placa: 'XYZ-5678',
-    dono: 'Maria Oliveira',
-    dataHora: '2024-10-21 10:15', // Adicionado campo de data/hora
-  },
-  {
-    id: '3',
-    modelo: 'Mustang',
-    marca: 'Ford',
-    ano: '2022',
-    placa: 'MST-9012',
-    dono: 'Carlos Pereira',
-    dataHora: '2024-10-22 09:00', // Adicionado campo de data/hora
-  },
-  {
-    id: '4',
-    modelo: 'Corolla',
-    marca: 'Toyota',
-    ano: '2021',
-    placa: 'COR-3456',
-    dono: 'Ana Costa',
-    dataHora: '2024-10-23 11:45', // Adicionado campo de data/hora
-  },
-];
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import app from '../config/firebase'; // Substitua pelo caminho correto do arquivo de configuração Firebase
 
 export default function VerAgendamentos() {
+  const [veiculos, setVeiculos] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [contas, setContas] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Função para filtrar os veículos com base na pesquisa
+  useEffect(() => {
+    const getEnterprises = async () => {
+      try {
+        const db = getFirestore(app);
+        const querySnapshot = await getDocs(collection(db, 'usuarios'));
+        const fetchedContas = [];
+        querySnapshot.forEach((doc) => {
+          fetchedContas.push({
+            id: doc.id, // ID único do documento
+            ...doc.data(), // Dados do documento
+          });
+        });
+        setContas(fetchedContas);
+        setLoading(false);
+      } catch (error) {
+        console.error('Erro ao buscar dados do Firebase:', error);
+      }
+    };
+
+    getEnterprises();
+    const fetchAgendamentos = async () => {
+      try {
+        const db = getFirestore(app);
+        const agendamentosCollection = collection(db, 'agendamentos');
+        const agendamentosSnapshot = await getDocs(agendamentosCollection);
+        const agendamentosData = agendamentosSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setVeiculos(agendamentosData);
+      } catch (error) {
+        console.error('Erro ao buscar agendamentos: ', error);
+      }
+    };
+
+    fetchAgendamentos();
+  }, []);
+
+  // Filtrar veículos com base na pesquisa
   const filteredVeiculos = veiculos.filter(
     (veiculo) =>
-      veiculo.modelo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      veiculo.marca.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      veiculo.dono.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      veiculo.placa.toLowerCase().includes(searchQuery.toLowerCase())
+      veiculo.carModel?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      veiculo.mechanic?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      veiculo.mechanic?.location?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
-      <Text style={styles.modelo}>{item.modelo}</Text>
-      <Text>Marca: {item.marca}</Text>
-      <Text>Ano: {item.ano}</Text>
-      <Text>Placa: {item.placa}</Text>
-      <Text>Donos: {item.dono}</Text>
-      <Text>Data/Hora: {item.dataHora}</Text> 
+      <Text style={styles.modelo}>{item.carModel || 'Sem modelo'}</Text>
+      <Text>Oficina: {item.mechanic?.name || 'Sem informação'}</Text>
+      <Text>Localização: {item.mechanic?.location || 'Sem localização'}</Text>
+      <Text>Horário: {item.mechanic?.hours || 'Sem horário'}</Text>
+      <Text>Data Selecionada: {item.selectedDate || 'Sem data'}</Text>
+      <Text>Telefone: {item.mechanic?.phone || 'Sem telefone'}</Text>
+      <Text>nome: {item.nome || 'Sem nome'}</Text>
     </View>
   );
 
@@ -68,14 +72,14 @@ export default function VerAgendamentos() {
       <Text style={styles.title}>Ver Agendamentos</Text>
       <TextInput
         style={styles.searchInput}
-        placeholder="Pesquisar por modelo, marca, dono ou placa"
+        placeholder="Pesquisar por modelo, oficina ou localização"
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
       <FlatList
         data={filteredVeiculos}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
       />
     </View>
